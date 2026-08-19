@@ -14,7 +14,7 @@ def load():
     TARGET = "Hazardous"
 
     # Load into dataframes
-    df = pd.read_csv("data/nasa.csv")
+    df = pd.read_csv("../data/nasa.csv")
 
     x = df[FEATURES]
     y = df[TARGET].astype(int)
@@ -40,7 +40,7 @@ def preprocess():
     '''Loads data from data/nasa.csv. Splits data into training (70%), validation (15%), and test (15%) sets.
     Returns list of numpy arrays in the following order:
     x_train, y_train, x_val, y_val, x_test, y_test'''
-    
+
     x, y = load()
     x_train, y_train, x_val, y_val, x_test, y_test = split_scale(x, y)
     return [x_train, y_train, x_val, y_val, x_test, y_test]
