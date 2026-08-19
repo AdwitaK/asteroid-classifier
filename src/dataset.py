@@ -1,6 +1,4 @@
-import torch
 from torch.utils.data import Dataset
-
 
 class AsteroidDataset(Dataset):
     def __init__(self, x, y):
