@@ -18,7 +18,7 @@ df = pd.read_csv("data/nasa.csv")
 x = df[FEATURES]
 y = df[TARGET].astype(int)
 
-# Split into train, validate and test groups
+# Split into train, validate and test groups - 70-15-15 split
 x_train, x_temp, y_train, y_temp = train_test_split(x, y, test_size=0.3, random_state=17, stratify=y)
 x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=0.5, random_state=17, stratify=y_temp)
 
