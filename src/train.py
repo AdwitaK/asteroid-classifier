@@ -28,7 +28,7 @@ criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-num_epochs = 30
+num_epochs = 75
 best_val_loss = float("inf")
 patience = 5 # number of epochs to continue training if no improvement in val_loss
 epochs_without_improvement = 0 #counter
@@ -80,7 +80,7 @@ for epoch in range(num_epochs):
         epochs_without_improvement = 0
         best_val_loss = val_loss
 
-        torch.save(model.state_dict(), "asteroid_model_early_stop.pt")
+        torch.save(model.state_dict(), "asteroid_model_less_neurons.pt")
 
     else:
         epochs_without_improvement += 1
