@@ -4,11 +4,11 @@ class AsteroidClassifier(nn.Module):
     def __init__(self, num_features):
         super().__init__()
         self.network = nn.Sequential(
-            nn.Linear(num_features, 16),
+            nn.Linear(num_features, 32),
             nn.ReLU(),
-            nn.Linear(16, 8),
+            nn.Linear(32, 16),
             nn.ReLU(),
-            nn.Linear(8, 1)
+            nn.Linear(16, 1)
         )
 
     def forward(self, x):
