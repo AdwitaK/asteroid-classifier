@@ -15,13 +15,13 @@ model = LogisticRegression(max_iter=1000, class_weight="balanced")
 
 model.fit(x_train, y_train)
 
-preds = model.predict(x_val)
+preds = model.predict(x_test)
 
-accuracy = accuracy_score(y_val, preds)
-precision = precision_score(y_val, preds)
-recall = recall_score(y_val, preds)
-f1 = f1_score(y_val, preds)
-cm = confusion_matrix(y_val, preds)
+accuracy = accuracy_score(y_test, preds)
+precision = precision_score(y_test, preds)
+recall = recall_score(y_test, preds)
+f1 = f1_score(y_test, preds)
+cm = confusion_matrix(y_test, preds)
 
 print(f"Accuracy : {accuracy:.4f}")
 print(f"Precision: {precision:.4f}")
