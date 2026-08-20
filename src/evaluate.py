@@ -20,23 +20,30 @@ x_train, y_train, x_val, y_val, x_test, y_test = convert_to_tensors(data)
 val_data = AsteroidDataset(x_val, y_val)
 val_loader = DataLoader(val_data, 64)
 
+test_data = AsteroidDataset(x_test, y_test)
+test_loader = DataLoader(test_data, 64)
+
+train_data = AsteroidDataset(x_train, y_train)
+train_loader = DataLoader(train_data, 64)
+
 # Load model
 model = AsteroidClassifier(x_train.shape[1])
-model.load_state_dict(torch.load("asteroid_model.pt"))
+model.load_state_dict(torch.load("asteroid_model_less_neurons.pt"))
 
 # Inference
+threshold = 0.5
 model.eval()
 
 all_preds = []
 all_labels = []
 
 with torch.no_grad():
-    for x_batch, y_batch in val_loader:
+    for x_batch, y_batch in test_loader:
         logits = model(x_batch).squeeze()
 
         probs = torch.sigmoid(logits)
 
-        preds = (probs >= 0.5).float()
+        preds = (probs >= threshold).float()
 
         all_preds.extend(preds.numpy())
 
