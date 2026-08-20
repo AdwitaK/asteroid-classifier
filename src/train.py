@@ -21,16 +21,19 @@ test_loader = DataLoader(test_data, batch_size=64)
 
 model = AsteroidClassifier(x_train.shape[1])
 
-#Account for imbalance in datases
+# Account for imbalance in dataset
 hazardous = y_train.sum()
 pos_weight = torch.tensor([(len(y_train) - hazardous )/ hazardous], dtype = torch.float32)
 criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 
-
-
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-num_epochs = 20
+num_epochs = 30
+best_val_loss = float("inf")
+patience = 5 # number of epochs to continue training if no improvement in val_loss
+epochs_without_improvement = 0 #counter
+
+# Training + Validation loop
 for epoch in range(num_epochs):
 
     ## Train
@@ -40,8 +43,7 @@ for epoch in range(num_epochs):
     for x_batch, y_batch in train_loader:
         optimizer.zero_grad()
 
-        output = model(x_batch)
-        output = output.squeeze()
+        output = model(x_batch).squeeze()
 
         loss = criterion(output, y_batch)
         loss.backward()
@@ -64,7 +66,7 @@ for epoch in range(num_epochs):
             loss = criterion(output, y_batch)
 
             val_loss += loss.item()
-        val_loss /= len(val_loader)
+    val_loss /= len(val_loader)
 
 
     print(
@@ -72,3 +74,18 @@ for epoch in range(num_epochs):
             f"Training Loss: {average_loss:.4f}, "
             f"Validation Loss: {val_loss:.4f}"
         )
+
+    # Save a good model
+    if val_loss < best_val_loss:
+        epochs_without_improvement = 0
+        best_val_loss = val_loss
+
+        torch.save(model.state_dict(), "asteroid_model_early_stop.pt")
+
+    else:
+        epochs_without_improvement += 1
+
+    # Early stop
+    if epochs_without_improvement >= patience:
+        print("early stopping triggered")
+        break
