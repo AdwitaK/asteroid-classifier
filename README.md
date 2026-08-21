@@ -19,7 +19,7 @@ Asteroid hazard labels are heavily imbalanced, the hazardous objects being the r
 ### 1. Baseline comparison
 I first trained a logistic regression model and a baseline feedforward neural network on the same features, both with class-imbalance correction (weighted loss). The neural network outperformed logistic regression, justifying the added complexity for this problem.
 
-| Model | Precision (hazardous) | Recall (hazardous) | F1 (hazardous) |
+| Model | Precision | Recall | F1 |
 |---|---|---|---|
 | Logistic Regression | 0.6034 | 0.9211 | 0.7292 |
 | Baseline NN (64-32)| 0.8321 | 1.000 | 0.9084 |
@@ -53,9 +53,9 @@ For each architecture, I also swept classification thresholds rather than defaul
 **Final model:** 18 → 32 → 16 → 1, threshold = 0.5
 
 - Accuracy: 0.9815
-- Precision (hazardous): 0.8976
-- Recall (hazardous): 1.0000
-- F1 (hazardous): 0.9461
+- Precision: 0.8976
+- Recall: 1.0000
+- F1: 0.9461
 
 ![Confusion Matrix](assets/confusion_matrix.png)
 
